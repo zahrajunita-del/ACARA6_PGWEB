@@ -123,7 +123,7 @@
 
                 // Tooltip jalan
                 mouseover: function (e) {
-                    jalan.bindTooltip(feature.properties.fungsi, {
+                    jalan.bindTooltip(feature.properties.NAMA_UNSUR, {
                         direction: "auto",
                         sticky: true,
                     });
@@ -174,7 +174,7 @@
         // onEachFeature
         onEachFeature: function (feature, layer) {
             // variable popup content
-            var popup_content = "Kecamatan: " + feature.properties.wadmkc + "<br>" +
+            var popup_content = "Kecamatan: " + feature.properties.NAMOBJ + "<br>" +
                 "Jumlah Penduduk: " + feature.properties.Penduduk;
 
             layer.on({
