@@ -2,22 +2,18 @@
 <html>
 
 <head>
-
     <meta charset="utf-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Leaflet JS</title>
 
-
     <!-- Leaflet CSS -->
     <link rel="stylesheet"
-        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+        crossorigin="">
 
-
-    <!-- Style Peta -->
     <style>
-
         html,
         body {
             width: 100%;
@@ -29,32 +25,27 @@
             width: 100%;
             height: 100%;
         }
-
     </style>
 
 </head>
 
-
 <body>
-
 
     <!-- Wadah Peta -->
     <div id="map"></div>
 
-
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
-
     <!-- Leaflet JS -->
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+        crossorigin=""></script>
 
     <script>
 
-
         // =====================================================
-        // 1. INISIALISASI PETA
+        // INISIALISASI PETA
         // =====================================================
 
         var map = L.map("map").setView(
@@ -64,7 +55,7 @@
 
 
         // =====================================================
-        // 2. BASEMAP OPENSTREETMAP
+        // BASEMAP OPENSTREETMAP
         // =====================================================
 
         var basemap = L.tileLayer(
@@ -75,36 +66,26 @@
             }
         );
 
-
-        // Menambahkan basemap ke peta
         basemap.addTo(map);
 
 
-
         // =====================================================
-        // 3. GEOJSON POINT - TOPONIMI
+        // GEOJSON POINT - TOPONIMI
         // =====================================================
 
         var toponimi = L.geoJSON(null, {
 
-
-            // Mengatur simbol titik
+            // Simbologi titik
             pointToLayer: function (feature, latlng) {
 
                 return L.marker(latlng, {
 
                     icon: L.icon({
-
                         iconUrl: "images/home_marker.png",
-
                         iconSize: [48, 48],
-
                         iconAnchor: [24, 48],
-
                         popupAnchor: [0, -48],
-
                         tooltipAnchor: [-16, -30]
-
                     })
 
                 });
@@ -112,11 +93,9 @@
             },
 
 
-            // Mengatur popup dan tooltip
+            // Popup dan Tooltip
             onEachFeature: function (feature, layer) {
 
-
-                // Isi popup
                 var popup_content =
                     "Nama: " +
                     feature.properties.TOPONIMI +
@@ -130,17 +109,17 @@
 
                     "<img src='images/" +
                     feature.properties.image +
-                    "' width='200'>";
+                    "' alt='' width='200'>";
 
 
-                // Popup
                 layer.on({
 
+                    // Popup
                     click: function () {
 
-                        layer
-                            .bindPopup(popup_content)
-                            .openPopup();
+                        layer.bindPopup(
+                            popup_content
+                        ).openPopup();
 
                     },
 
@@ -148,15 +127,13 @@
                     // Tooltip
                     mouseover: function () {
 
-                        layer
-                            .bindTooltip(
-                                feature.properties.TOPONIMI,
-                                {
-                                    direction: "left",
-                                    sticky: true
-                                }
-                            )
-                            .openTooltip();
+                        layer.bindTooltip(
+                            feature.properties.TOPONIMI,
+                            {
+                                direction: "left",
+                                sticky: true
+                            }
+                        ).openTooltip();
 
                     }
 
@@ -167,7 +144,7 @@
         });
 
 
-        // Memanggil file GeoJSON Toponimi
+        // Memanggil GeoJSON Toponimi
         $.getJSON(
             "GEOJSON/toponimi.geojson",
             function (data) {
@@ -180,35 +157,27 @@
         );
 
 
-
         // =====================================================
-        // 4. GEOJSON POLYLINE - JALAN
+        // GEOJSON POLYLINE - JALAN
         // =====================================================
 
         var jalan = L.geoJSON(null, {
 
-
-            // Mengatur simbologi jalan
-            style: function (feature) {
+            // Simbologi jalan
+            style: function () {
 
                 return {
-
                     color: "red",
-
                     opacity: 1,
-
                     weight: 3
-
                 };
 
             },
 
 
-            // Mengatur popup dan tooltip
+            // Popup dan Tooltip
             onEachFeature: function (feature, layer) {
 
-
-                // Isi popup jalan
                 var popup_content =
                     "Fungsi: " +
                     feature.properties.NAMA_UNSUR +
@@ -220,28 +189,26 @@
 
                 layer.on({
 
-                    // Popup jalan
+                    // Popup
                     click: function () {
 
-                        layer
-                            .bindPopup(popup_content)
-                            .openPopup();
+                        layer.bindPopup(
+                            popup_content
+                        ).openPopup();
 
                     },
 
 
-                    // Tooltip jalan
+                    // Tooltip
                     mouseover: function () {
 
-                        layer
-                            .bindTooltip(
-                                feature.properties.NAMA_UNSUR,
-                                {
-                                    direction: "auto",
-                                    sticky: true
-                                }
-                            )
-                            .openTooltip();
+                        layer.bindTooltip(
+                            feature.properties.NAMA_UNSUR,
+                            {
+                                direction: "auto",
+                                sticky: true
+                            }
+                        ).openTooltip();
 
                     }
 
@@ -252,7 +219,7 @@
         });
 
 
-        // Memanggil file GeoJSON Jalan
+        // Memanggil GeoJSON Jalan
         $.getJSON(
             "GEOJSON/jalan.geojson",
             function (data) {
@@ -265,78 +232,61 @@
         );
 
 
-
         // =====================================================
-        // 5. GEOJSON POLYGON - JUMLAH PENDUDUK
+        // GEOJSON POLYGON - JUMLAH PENDUDUK
         // =====================================================
 
         var jumlah_penduduk = L.geoJSON(null, {
 
-
-            // Mengatur simbologi berdasarkan jumlah penduduk
+            // Simbologi berdasarkan jumlah penduduk
             style: function (feature) {
 
-
-                // Mengambil nilai jumlah penduduk
                 var penduduk =
-                    Number(feature.properties.Penduduk);
+                    parseFloat(
+                        feature.properties.Penduduk
+                    );
 
 
-                // Kelas 1
+                // Penduduk <= 12.000
                 if (penduduk <= 12000) {
 
                     return {
-
                         opacity: 1,
-
                         color: "black",
-
                         weight: 1,
-
                         fillOpacity: 0.7,
-
                         fillColor: "#ffffb2"
-
                     };
 
                 }
 
 
-                // Kelas 2
-                else if (penduduk <= 24000) {
+                // Penduduk 12.001 - 24.000
+                else if (
+                    penduduk > 12000 &&
+                    penduduk <= 24000
+                ) {
 
                     return {
-
                         opacity: 1,
-
                         color: "black",
-
                         weight: 1,
-
                         fillOpacity: 0.7,
-
                         fillColor: "#fd8d3c"
-
                     };
 
                 }
 
 
-                // Kelas 3
+                // Penduduk > 24.000
                 else {
 
                     return {
-
                         opacity: 1,
-
                         color: "black",
-
                         weight: 1,
-
                         fillOpacity: 0.7,
-
                         fillColor: "#bd0026"
-
                     };
 
                 }
@@ -344,57 +294,45 @@
             },
 
 
-            // Mengatur popup dan tooltip
+            // Popup dan Tooltip
             onEachFeature: function (feature, layer) {
 
-
-                // Isi popup
                 var popup_content =
                     "Kecamatan: " +
-                    feature.properties.NAMOBJ +
+                    feature.properties.WADMKC +
                     "<br>" +
 
                     "Jumlah Penduduk: " +
                     feature.properties.Penduduk;
 
 
-                layer.on({
-
-                    // Popup jumlah penduduk
-                    click: function () {
-
-                        layer
-                            .bindPopup(popup_content)
-                            .openPopup();
-
-                    },
+                // Popup
+                layer.bindPopup(
+                    popup_content
+                );
 
 
-                    // Tooltip kecamatan
-                    mouseover: function () {
-
-                        layer
-                            .bindTooltip(
-                                feature.properties.NAMOBJ,
-                                {
-                                    direction: "auto",
-                                    sticky: true
-                                }
-                            )
-                            .openTooltip();
-
+                // Tooltip
+                layer.bindTooltip(
+                    feature.properties.WADMKC,
+                    {
+                        direction: "auto",
+                        sticky: true
                     }
-
-                });
+                );
 
             }
 
         });
 
 
-        // Memanggil file GeoJSON Jumlah Penduduk
+        // =====================================================
+        // MEMANGGIL GEOJSON JUMLAH PENDUDUK
+        // =====================================================
+
         $.getJSON(
             "GEOJSON/jumlah_penduduk.geojson",
+
             function (data) {
 
                 jumlah_penduduk.addData(data);
@@ -402,16 +340,14 @@
                 map.addLayer(jumlah_penduduk);
 
             }
+
         );
 
 
-
         // =====================================================
-        // 6. CONTROL LAYER
+        // CONTROL LAYER
         // =====================================================
 
-
-        // Basemap
         var baseMaps = {
 
             "OpenStreetMap": basemap
@@ -419,7 +355,6 @@
         };
 
 
-        // Overlay
         var overlayMaps = {
 
             "Toponimi": toponimi,
@@ -431,20 +366,16 @@
         };
 
 
-        // Membuat control layer
-        var controllayer =
+        var controlLayer =
             L.control.layers(
                 baseMaps,
                 overlayMaps
             );
 
 
-        // Menambahkan control layer ke peta
-        controllayer.addTo(map);
-
+        controlLayer.addTo(map);
 
     </script>
-
 
 </body>
 
